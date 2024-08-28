@@ -1,0 +1,3 @@
+aiogram>=3.0.0,<4.0.0
+magic-filter
+python-dotenv
