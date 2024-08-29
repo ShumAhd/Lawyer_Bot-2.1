@@ -14,7 +14,7 @@ if not config.TOKEN or not config.LAWYER_CHAT_ID or not config.TOPIC_ID or not c
 # Инициализация бота и диспетчера
 bot = Bot(token=config.TOKEN)
 storage = MemoryStorage()
-dp = Dispatcher(bot, storage=storage)
+dp = Dispatcher(storage=storage)
 router = Router()
 
 # FSM для состояния пользователя
