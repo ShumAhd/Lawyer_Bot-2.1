@@ -49,6 +49,8 @@ async def text_handler(message: Message):
 
     # Проверяем, является ли это сообщение из личного чата
     if message.chat.type == "private":
+
+
         await ask_question(message)
     else:
         # Если сообщение не из личного чата, отправляем пользователя в личный чат с ботом
@@ -132,8 +134,11 @@ async def process_phone_step(message: Message, state: FSMContext):
         )
 
 @router.message(lambda message: message.text == 'Задать новый вопрос юристу')
+
 async def new_question_handler(message: Message, state: FSMContext):
     await ask_question(message, state)
+
+
 
 # Подключение роутера к диспетчеру
 dp.include_router(router)
