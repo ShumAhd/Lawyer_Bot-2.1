@@ -11,7 +11,7 @@ async def on_startup(dispatcher: Dispatcher):
     logging.info("Bot is starting...")
 
 async def on_shutdown(dispatcher: Dispatcher):
-    logging.warning("Shutting down..")
+    logging.warning("Shutting down...")
     # Закрыть соединения и т.д.
     await bot.session.close()
 

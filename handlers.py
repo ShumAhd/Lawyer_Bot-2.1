@@ -6,9 +6,8 @@ from aiogram.fsm.state import StatesGroup, State
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.types import Message
 from aiogram.filters import CommandStart
-from aiogram import filters
 import config
-from config import TOKEN, LAWYER_CHAT_ID, TOPIC_ID, TARGET_CHAT_ID
+from config import TOKEN, TOPIC_ID, TARGET_CHAT_ID
 
 # Проверка переменных окружения
 if not config.TOKEN or not config.LAWYER_CHAT_ID or not config.TOPIC_ID or not config.TARGET_CHAT_ID:
@@ -34,8 +33,6 @@ def is_relevant_topic(message: Message) -> bool:
         and message.message_thread_id is not None
         and int(message.message_thread_id) == int(TOPIC_ID))
     )
-
-
 
 # Обработчики сообщений
 
@@ -97,10 +94,8 @@ async def process_question_step(message: Message, state: FSMContext):
     await message.answer('Для продолжения введите номер своего телефона в международном формате, пример: +79241233223')
     await state.set_state(Form.waiting_for_phone)
 
-
 # Настройка базового конфигурирования логирования
 logging.basicConfig(level=logging.INFO)
-
 
 @router.message(Form.waiting_for_phone)
 async def process_phone_step(message: Message, state: FSMContext):
@@ -139,7 +134,6 @@ async def process_phone_step(message: Message, state: FSMContext):
 @router.message(lambda message: message.text == 'Задать новый вопрос юристу')
 async def new_question_handler(message: Message, state: FSMContext):
     await ask_question(message, state)
-
 
 # Подключение роутера к диспетчеру
 dp.include_router(router)
