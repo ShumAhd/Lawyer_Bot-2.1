@@ -3,7 +3,6 @@ import logging
 import traceback
 from aiogram import Bot, Dispatcher
 from handlers import dp, bot
-import config
 
 logging.basicConfig(level=logging.INFO)
 
