@@ -6,6 +6,7 @@ from aiogram.fsm.state import StatesGroup, State
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.types import Message
 from aiogram.filters import CommandStart
+
 import config
 from config import TOKEN, TOPIC_ID, TARGET_CHAT_ID
 
@@ -34,6 +35,8 @@ def is_relevant_topic(message: Message) -> bool:
         and int(message.message_thread_id) == int(TOPIC_ID))
     )
 
+
+
 # Обработчики сообщений
 
 def is_question_to_lawyer(message: Message) -> bool:
@@ -49,8 +52,6 @@ async def text_handler(message: Message):
 
     # Проверяем, является ли это сообщение из личного чата
     if message.chat.type == "private":
-
-
         await ask_question(message)
     else:
         # Если сообщение не из личного чата, отправляем пользователя в личный чат с ботом
@@ -96,8 +97,10 @@ async def process_question_step(message: Message, state: FSMContext):
     await message.answer('Для продолжения введите номер своего телефона в международном формате, пример: +79241233223')
     await state.set_state(Form.waiting_for_phone)
 
+
 # Настройка базового конфигурирования логирования
 logging.basicConfig(level=logging.INFO)
+
 
 @router.message(Form.waiting_for_phone)
 async def process_phone_step(message: Message, state: FSMContext):
@@ -134,10 +137,8 @@ async def process_phone_step(message: Message, state: FSMContext):
         )
 
 @router.message(lambda message: message.text == 'Задать новый вопрос юристу')
-
 async def new_question_handler(message: Message, state: FSMContext):
     await ask_question(message, state)
-
 
 
 # Подключение роутера к диспетчеру
