@@ -22,6 +22,10 @@ class Form(StatesGroup):
     waiting_for_question = State()
     waiting_for_phone = State()
 
+# Функция для проверки соответствия message_thread_id
+def is_relevant_thread(message: Message):
+    return message.message_thread_id == 2
+
 # Обработчики команд и сообщений
 @router.message(Command(commands=["start"]))
 async def start_handler(message: Message):
@@ -88,7 +92,7 @@ async def new_question_handler(message: Message):
     await ask_question(message)
 
 def is_relevant_topic(message: Message):
-    return message.is_topic_message and int(message.topic_id) == int(config.TOPIC_ID)
+    return message.is_topic_message and int(message.message_thread_id) == int(config.TOPIC_ID)
 
 @router.message(lambda message: message.text == "Привет" and is_relevant_topic(message))
 async def text_handler(message: Message):
